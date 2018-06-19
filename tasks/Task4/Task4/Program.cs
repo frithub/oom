@@ -13,14 +13,14 @@ namespace Task4
 {
     public interface Icomponent
     {
-        void showTurnedOn(bool powerOn); //arguments?
+        void showTurnedOn(bool powerOn); 
         void showDevice();
     }
     public class Switch : Icomponent
     {
         private int power;
         public bool turnedOn;
-        private string name;
+        public string name;
         private ushort interfaces;
         private UInt32 bandwithMBit;
 
@@ -41,7 +41,7 @@ namespace Task4
 
         public void showDevice()
         {
-            Console.WriteLine("this is the switch ... " + name); // name?
+            Console.WriteLine("this is the switch ... " + name); 
         }
         public void showTurnedOn(bool powerOn)
         {
@@ -88,29 +88,27 @@ namespace Task4
         {
             string path = AppDomain.CurrentDomain.BaseDirectory;
 
-            Icomponent[] devices = new Icomponent[3];
-            devices[0] = new Switch(24, 1000, 110, false, "Catalyst2960-L");
-            devices[1] = new Router();
-            devices[2] = new Switch(24, 1000, 110, false, "Catalyst2960-X");
+            Icomponent[] device = new Icomponent[3];
+            device[0] = new Switch(24, 1000, 110, false, "Catalyst2960-L");
+            device[1] = new Router();
+            device[2] = new Switch(24, 1000, 110, false, "Catalyst2960-X");
 
-            // Seralize
-            for (int i = 0; i < devices.Length; i++)
+            for (int i = 0; i < device.Length; i++) // Seralize
             {
-                string json = JsonConvert.SerializeObject(devices[i], Formatting.Indented);
+                string json = JsonConvert.SerializeObject(device[i], Formatting.Indented);
 
                 File.WriteAllText(path + "object" + i + ".json", json);
 
                 
             }
 
-            for (int i = 0; i < devices.Length; i++)
+            for (int i = 0; i < device.Length; i++) // print
             {
                 string json = File.ReadAllText(path + "object" + i + ".json");
                 Console.WriteLine(json);
             }
 
-
-                Console.WriteLine("");
+            
             Console.ReadKey();
         }
     }
